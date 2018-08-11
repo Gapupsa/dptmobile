@@ -24,6 +24,7 @@ class _ReportPageState extends State<ReportPage>
   bool _isLoadingTotalData = false;
   final formKey = new GlobalKey<FormState>();
   final scaffoldKey = new GlobalKey<ScaffoldState>();
+  double width,height;
 
   BuildContext ctxDialogLoading;
   //total data
@@ -85,6 +86,8 @@ class _ReportPageState extends State<ReportPage>
 
   @override
   Widget build(BuildContext context) {
+    width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
     _ctx = context;
     var searchBtn = Container(
       width: 50.0,
@@ -287,6 +290,7 @@ class _ReportPageState extends State<ReportPage>
                         ),
                 ],
               ),
+              const SizedBox(height: 10.0),
             ],
           ),
         ),
@@ -458,12 +462,17 @@ class _ReportPageState extends State<ReportPage>
           bool isBool = false}) =>
       Padding(
         padding: padding,
-        child: Text(
-          data,
-          style: TextStyle(
-            color: color,
-            fontSize: size.toDouble(),
-            fontWeight: isBool ? FontWeight.bold : FontWeight.normal,
+        child: SizedBox(
+          height: height * 0.016,
+          child: FittedBox(
+            child: Text(
+              data,
+              style: TextStyle(
+                color: color,
+                fontSize: size.toDouble(),
+                fontWeight: isBool ? FontWeight.bold : FontWeight.normal,
+              ),
+            ),
           ),
         ),
       );

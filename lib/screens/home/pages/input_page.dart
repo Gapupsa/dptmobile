@@ -343,6 +343,7 @@ class InputPageState extends State<InputPage> implements InputScreenContract {
                 new Column(children: <Widget>[
                   _isLoading ? new CircularProgressIndicator() : loginBtn,
                 ]),
+                const SizedBox(height: 24.0),
               ],
             ),
             //const SizedBox(height: 24.0),

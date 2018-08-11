@@ -230,6 +230,7 @@ class RegisterPageState extends State<RegisterPage>
                   },
                   child: new Text("Change Password"),
                 ),
+                const SizedBox(height: 10.0),
               ]),
             ],
           ),
