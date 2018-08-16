@@ -213,8 +213,6 @@ class InputPageState extends State<InputPage> implements InputScreenContract {
                   focusNode: _focusNodeNik,
                   child: new TextFormField(
                     keyboardType: TextInputType.number,
-                    maxLength: 16,
-                    maxLengthEnforced: true,
                     decoration: const InputDecoration(
                       filled: true,
                       icon: const Icon(Icons.credit_card),
