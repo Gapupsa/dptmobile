@@ -212,6 +212,9 @@ class InputPageState extends State<InputPage> implements InputScreenContract {
                 new EnsureVisibleWhenFocused(
                   focusNode: _focusNodeNik,
                   child: new TextFormField(
+                    keyboardType: TextInputType.number,
+                    maxLength: 16,
+                    maxLengthEnforced: true,
                     decoration: const InputDecoration(
                       filled: true,
                       icon: const Icon(Icons.credit_card),
@@ -222,7 +225,13 @@ class InputPageState extends State<InputPage> implements InputScreenContract {
                       _nik = value;
                     },
                     validator: (val) {
-                      return val == "" ? "NIK IS REQUIRED'" : null;
+                      if(val.length < 16 || val.length > 16){
+                        return "NIK IS 16 DIGITS";
+                      }else if(val == ""){
+                        return "NIK IS REQUIRED";
+                      }else{
+                        return null;
+                      }
                     },
                     controller: ctrl1,
                     focusNode: _focusNodeNik,
@@ -305,6 +314,7 @@ class InputPageState extends State<InputPage> implements InputScreenContract {
                 new EnsureVisibleWhenFocused(
                   focusNode: _focusNodeNohp,
                   child: new TextFormField(
+                      keyboardType: TextInputType.number,
                       decoration: const InputDecoration(
                         filled: true,
                         icon: const Icon(Icons.phone_android),

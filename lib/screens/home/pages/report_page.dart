@@ -186,7 +186,11 @@ class _ReportPageState extends State<ReportPage>
               const SizedBox(height: 10.0),
               new Row(
                 children: <Widget>[
-                  text("TOTAL DATA BY DISTRICTS OF TODAY / ",isBool: true),
+                  new Text(
+                    "TOTAL DATA BY DISTRICTS OF TODAY /  ",
+                    style: new TextStyle(
+                        fontSize: 14.0, fontWeight: FontWeight.bold),
+                  ),
                   text(
                       formatDate(DateTime.now(), [yyyy, '-', mm, '-', dd]) +
                           " :",
@@ -198,7 +202,11 @@ class _ReportPageState extends State<ReportPage>
               new Row(
                 children: <Widget>[
                   Expanded(
-                      child: text("- DISTRICTS OF BOTOALA : ",isBool: true),),
+                      child: new Text(
+                    "- DISTRICTS OF BONTOALA : ",
+                    style: new TextStyle(
+                        fontSize: 16.0, fontWeight: FontWeight.bold),
+                  )),
                   _isLoadingTotalData
                       ? CircularProgressIndicator()
                       : text(_bontoala == null ? "0" : _bontoala,
@@ -208,7 +216,11 @@ class _ReportPageState extends State<ReportPage>
               new Row(
                 children: <Widget>[
                   Expanded(
-                      child:text("- DISTRICTS OF WAJO : ",isBool: true),),
+                      child: new Text(
+                    "- DISTRICTS OF WAJO : ",
+                    style: new TextStyle(
+                        fontSize: 16.0, fontWeight: FontWeight.bold),
+                  )),
                   _isLoadingTotalData
                       ? CircularProgressIndicator()
                       : text(_wajo == null ? "0" : _wajo,
@@ -218,7 +230,11 @@ class _ReportPageState extends State<ReportPage>
               new Row(
                 children: <Widget>[
                   Expanded(
-                      child: text("- DISTRICTS OF TALLO : ",isBool: true),),
+                      child: new Text(
+                    "- DISTRICTS OF TALLO : ",
+                    style: new TextStyle(
+                        fontSize: 16.0, fontWeight: FontWeight.bold),
+                  )),
                   _isLoadingTotalData
                       ? CircularProgressIndicator()
                       : text(_tallo == null ? "0" : _tallo,
@@ -228,7 +244,11 @@ class _ReportPageState extends State<ReportPage>
               new Row(
                 children: <Widget>[
                   Expanded(
-                      child: text("- DISTRICTS OF U.TANAH : ",isBool: true),),
+                      child: new Text(
+                    "- DISTRICTS OF U.TANAH : ",
+                    style: new TextStyle(
+                        fontSize: 16.0, fontWeight: FontWeight.bold),
+                  )),
                   _isLoadingTotalData
                       ? CircularProgressIndicator()
                       : text(_utanah == null ? "0" : _utanah,
@@ -238,8 +258,11 @@ class _ReportPageState extends State<ReportPage>
               new Row(
                 children: <Widget>[
                   Expanded(
-                      child: text("- DISTRICTS OF KEP.SANGKARRANG : ",isBool: true),
-                  ),
+                      child: new Text(
+                    "- DISTRICTS OF KEP.SANGKARRANG : ",
+                    style: new TextStyle(
+                        fontSize: 16.0, fontWeight: FontWeight.bold),
+                  )),
                   _isLoadingTotalData
                       ? CircularProgressIndicator()
                       : text(_kepsang == null ? "0" : _kepsang,
@@ -440,7 +463,7 @@ class _ReportPageState extends State<ReportPage>
       Padding(
         padding: padding,
         child: SizedBox(
-          height: height * 0.010,
+          height: height * 0.025,
           child: FittedBox(
             child: Text(
               data,
