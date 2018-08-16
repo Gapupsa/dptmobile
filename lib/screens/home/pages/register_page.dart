@@ -141,6 +141,7 @@ class RegisterPageState extends State<RegisterPage>
               new EnsureVisibleWhenFocused(
                 focusNode: _focusNodeEmail,
                 child: new TextFormField(
+                  keyboardType: TextInputType.emailAddress,
                   decoration: const InputDecoration(
                     border: const UnderlineInputBorder(),
                     filled: true,
