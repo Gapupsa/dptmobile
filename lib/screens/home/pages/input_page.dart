@@ -204,7 +204,7 @@ class InputPageState extends State<InputPage> implements InputScreenContract {
         child: new Form(
           key: formKey,
           child: new SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            padding: const EdgeInsets.symmetric(horizontal:15.0),
             child: new Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
@@ -280,9 +280,10 @@ class InputPageState extends State<InputPage> implements InputScreenContract {
                     Expanded(
                       child: Padding(
                           padding: EdgeInsets.only(left: 40.0),
-                          child: new Text("CHOOSE YOUR DISTRICTS : ")),
+                          child: new Text("Districts : ")),
                     ),
                     Expanded(
+                      flex: 2,
                       child: new DropdownButton(
                         value: _currentKC,
                         items: _dropDownMenuItemsKC,
@@ -297,9 +298,10 @@ class InputPageState extends State<InputPage> implements InputScreenContract {
                     Expanded(
                       child: Padding(
                           padding: EdgeInsets.only(left: 40.0),
-                          child: new Text("CHOOSE YOUR SUB-DISTRICTS : ")),
+                          child: new Text("Sub-Districts : ")),
                     ),
                     Expanded(
+                      flex: 2,
                       child: new DropdownButton(
                         value: _currentKL,
                         items: _dropDownMenuItemsKL,

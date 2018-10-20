@@ -189,7 +189,7 @@ class _ReportPageState extends State<ReportPage>
                   new Text(
                     "TOTAL DATA BY DISTRICTS OF TODAY /  ",
                     style: new TextStyle(
-                        fontSize: 14.0, fontWeight: FontWeight.bold),
+                        fontSize: 12.0, fontWeight: FontWeight.bold),
                   ),
                   text(
                       formatDate(DateTime.now(), [yyyy, '-', mm, '-', dd]) +
@@ -205,7 +205,7 @@ class _ReportPageState extends State<ReportPage>
                       child: new Text(
                     "- DISTRICTS OF BONTOALA : ",
                     style: new TextStyle(
-                        fontSize: 16.0, fontWeight: FontWeight.bold),
+                        fontSize: 13.0, fontWeight: FontWeight.bold),
                   )),
                   _isLoadingTotalData
                       ? CircularProgressIndicator()
@@ -219,7 +219,7 @@ class _ReportPageState extends State<ReportPage>
                       child: new Text(
                     "- DISTRICTS OF WAJO : ",
                     style: new TextStyle(
-                        fontSize: 16.0, fontWeight: FontWeight.bold),
+                        fontSize: 13.0, fontWeight: FontWeight.bold),
                   )),
                   _isLoadingTotalData
                       ? CircularProgressIndicator()
@@ -233,7 +233,7 @@ class _ReportPageState extends State<ReportPage>
                       child: new Text(
                     "- DISTRICTS OF TALLO : ",
                     style: new TextStyle(
-                        fontSize: 16.0, fontWeight: FontWeight.bold),
+                        fontSize: 13.0, fontWeight: FontWeight.bold),
                   )),
                   _isLoadingTotalData
                       ? CircularProgressIndicator()
@@ -247,7 +247,7 @@ class _ReportPageState extends State<ReportPage>
                       child: new Text(
                     "- DISTRICTS OF U.TANAH : ",
                     style: new TextStyle(
-                        fontSize: 16.0, fontWeight: FontWeight.bold),
+                        fontSize: 13.0, fontWeight: FontWeight.bold),
                   )),
                   _isLoadingTotalData
                       ? CircularProgressIndicator()
@@ -261,7 +261,7 @@ class _ReportPageState extends State<ReportPage>
                       child: new Text(
                     "- DISTRICTS OF KEP.SANGKARRANG : ",
                     style: new TextStyle(
-                        fontSize: 16.0, fontWeight: FontWeight.bold),
+                        fontSize: 13.0, fontWeight: FontWeight.bold),
                   )),
                   _isLoadingTotalData
                       ? CircularProgressIndicator()

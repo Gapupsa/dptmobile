@@ -14,8 +14,8 @@ class ExportData {
       var request = await httpClient.getUrl(Uri.parse(url));
       var response = await request.close();
       var bytes = await consolidateHttpClientResponseBytes(response);
-      bool res = await SimplePermissions.requestPermission(Permission.ReadExternalStorage);
-      bool res1 = await SimplePermissions.requestPermission(Permission.WriteExternalStorage);
+      PermissionStatus res = await SimplePermissions.requestPermission(Permission.ReadExternalStorage);
+      PermissionStatus res1 = await SimplePermissions.requestPermission(Permission.WriteExternalStorage);
       String dir = (await getExternalStorageDirectory()).path;
       File file = new File('$dir/$filename');
       await file.writeAsBytes(bytes);

@@ -89,7 +89,7 @@ class _SettingScreenState extends State<SettingScreen> {
   }
 
   requestPermission() async {
-    bool res = await SimplePermissions.requestPermission(permission);
+    PermissionStatus res = await SimplePermissions.requestPermission(permission);
     print("permission request result is " + res.toString());
   }
 

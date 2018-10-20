@@ -201,9 +201,10 @@ class RegisterPageState extends State<RegisterPage>
                   Expanded(
                     child: Padding(
                         padding: EdgeInsets.only(left: 40.0),
-                        child: new Text("CHOOSE DISTRICTS : ")),
+                        child: new Text("Districts : ")),
                   ),
                   Expanded(
+                    flex: 2,
                     child: new DropdownButton(
                       value: _currentK,
                       items: _dropDownMenuItems,

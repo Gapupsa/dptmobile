@@ -27,7 +27,7 @@ class RestDatasource {
       }
     );
 
-    final Map responseBody = JSON.decode(response.body);
+    final Map responseBody = json.decode(response.body);
     final statusCode = response.statusCode;
 
     return responseBody;
@@ -46,7 +46,7 @@ class RestDatasource {
       }
     );
 
-    final Map responseBody = JSON.decode(response.body);
+    final Map responseBody = json.decode(response.body);
     final statusCode = response.statusCode;
 
     return responseBody;
@@ -60,7 +60,7 @@ class RestDatasource {
       }
     );
 
-    final Map responseBody = JSON.decode(response.body);
+    final Map responseBody = json.decode(response.body);
     if(responseBody['flag']==1){
       return true;
     }
@@ -77,7 +77,7 @@ class RestDatasource {
         }
       );
 
-      final List responseBody = JSON.decode(response.body);
+      final List responseBody = json.decode(response.body);
       final statusCode = response.statusCode;
       
       if (statusCode != 200 || responseBody == null) {
@@ -111,7 +111,7 @@ class RestDatasource {
       }
     );
 
-    final Map responseBody = JSON.decode(response.body);
+    final Map responseBody = json.decode(response.body);
 
     return responseBody;
   }
@@ -132,7 +132,7 @@ class RestDatasource {
       }
     );
 
-    final Map responseBody = JSON.decode(response.body);
+    final Map responseBody = json.decode(response.body);
 
     return responseBody;
   }
@@ -146,7 +146,7 @@ class RestDatasource {
       }
     );
 
-    final Map responseBody = JSON.decode(response.body);
+    final Map responseBody = json.decode(response.body);
 
     return responseBody;
   }
@@ -160,7 +160,7 @@ class RestDatasource {
       }
     );
 
-    final Map responseBody = JSON.decode(response.body);
+    final Map responseBody = json.decode(response.body);
 
     return responseBody;
   }
@@ -174,7 +174,7 @@ class RestDatasource {
       }
     );
 
-    final Map responseBody = JSON.decode(response.body);
+    final Map responseBody = json.decode(response.body);
 
     return responseBody['success'].toString();
   }
@@ -187,7 +187,7 @@ class RestDatasource {
       }
     );
 
-    final Map responseBody = JSON.decode(response.body);
+    final Map responseBody = json.decode(response.body);
 
     return responseBody;
   }
@@ -205,7 +205,7 @@ class RestDatasource {
     );
 
     
-    final Map responseBody = JSON.decode(response.body);
+    final Map responseBody = json.decode(response.body);
     final statucCode = response.statusCode;
     if (statucCode != 200 || responseBody == null) {
       throw new FetchDataException(
