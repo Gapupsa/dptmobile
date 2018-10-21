@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:ui';
 
+import 'package:dptmobile/screens/home/home_screen._tps.dart';
 import 'package:dptmobile/screens/home/home_screen.dart';
 import 'package:dptmobile/screens/home/home_screen_user.dart';
 import 'package:flutter/material.dart';
@@ -76,11 +77,19 @@ class LoginScreenState extends State<LoginScreen>
                     user: usr,
                   )),
         );
-      } else {
+      } else if(usr.tipe == "1") {
         Navigator.pushReplacement(
           _ctx,
           MaterialPageRoute(
               builder: (context) => HomeScreenUser(
+                    user: usr,
+                  )),
+        );
+      }else {
+        Navigator.pushReplacement(
+          _ctx,
+          MaterialPageRoute(
+              builder: (context) => HomeScreenTps(
                     user: usr,
                   )),
         );

@@ -1,5 +1,6 @@
 import 'package:dptmobile/data/rest_ds.dart';
 import 'package:dptmobile/models/fixdpt.dart';
+import 'package:dptmobile/models/tps.dart';
 
 abstract class InputScreenContract {
   void onLoginSuccess(Map result);
@@ -13,6 +14,12 @@ class InputScreenPresenter {
 
   sendData(FixDpt data, String token) {
     api.sendData(data, token).then((Map result) {
+      _view.onLoginSuccess(result);
+    }).catchError((Exception error) => _view.onLoginError(error.toString()));
+  }
+
+  sendDataTps(Tps data, String token) {
+    api.sendDataTps(data, token).then((Map result) {
       _view.onLoginSuccess(result);
     }).catchError((Exception error) => _view.onLoginError(error.toString()));
   }

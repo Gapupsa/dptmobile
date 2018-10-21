@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:dptmobile/auth.dart';
-import 'package:dptmobile/routes.dart';
+//import 'package:dptmobile/auth.dart';
+//import 'package:dptmobile/routes.dart';
+import 'package:dptmobile/screens/home/home_screen.dart';
+import 'package:dptmobile/screens/login/login_screen.dart';
 
-void main() => runApp(new LoginApp());
+
+
+Future<Null> main() async {
+  
+  runApp(new LoginApp());
+}
+
 
 class LoginApp extends StatelessWidget {
 
@@ -16,7 +24,11 @@ class LoginApp extends StatelessWidget {
         fontFamily: 'Raleway',
         primarySwatch: Colors.red,
       ),
-      routes: routes,
+      routes: {
+        '/login':         (BuildContext context) => new LoginScreen(),
+        '/home':         (BuildContext context) => new HomeScreen(),
+        '/' :          (BuildContext context) => new LoginScreen(),
+      },
     );
   }
 

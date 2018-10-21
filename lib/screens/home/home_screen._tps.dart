@@ -1,35 +1,35 @@
 import 'package:dptmobile/data/database_helper.dart';
 import 'package:dptmobile/data/rest_ds.dart';
 import 'package:dptmobile/models/user.dart';
+import 'package:dptmobile/screens/home/pages/camera_page.dart';
 import 'package:dptmobile/screens/home/pages/home_page.dart';
-import 'package:dptmobile/screens/home/pages/input_page.dart';
-import 'package:dptmobile/screens/home/pages/register_page.dart';
-import 'package:dptmobile/screens/home/pages/report_page.dart';
+import 'package:dptmobile/screens/home/pages/input_tps.dart';
 import 'package:dptmobile/screens/login/login_screen.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreenTps extends StatefulWidget {
   final User user;
+  var cameras;
 
-  HomeScreen({this.user});
+  HomeScreenTps({this.user,this.cameras});
 
   @override
-  _HomeScreenState createState() => _HomeScreenState(user: user);
+  _HomeScreenTpsState createState() => _HomeScreenTpsState();
 }
 
-class _HomeScreenState extends State<HomeScreen>
+class _HomeScreenTpsState extends State<HomeScreenTps>
     with SingleTickerProviderStateMixin {
-  final User user;
 
   RestDatasource api = new RestDatasource();
 
-  _HomeScreenState({this.user});
   TabController _controller;
+
 
   @override
   void initState() {
-    _controller = new TabController(vsync: this, length: 4);
+    _controller = new TabController(vsync: this,length: 2);
     super.initState();
+
   }
 
   @override
@@ -52,9 +52,7 @@ class _HomeScreenState extends State<HomeScreen>
               icon: Icon(Icons.home),
               text: "HOME",
             ),
-            Tab(icon: Icon(Icons.input), text: "INPUT"),
-            Tab(icon: Icon(Icons.receipt), text: "VIEW"),
-            Tab(icon: Icon(Icons.account_circle), text: "USER"),
+            Tab(icon: Icon(Icons.input), text: "TPS"),
           ],
         ),
       ),
@@ -63,12 +61,12 @@ class _HomeScreenState extends State<HomeScreen>
           children: <Widget>[
             new UserAccountsDrawerHeader(
               accountName: new Text(
-                user.username,
+                widget.user.username,
                 style:
                     TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
               ),
               accountEmail: new Text(
-                user.email,
+                widget.user.email,
                 style: TextStyle(color: Colors.white),
               ),
               currentAccountPicture: new CircleAvatar(
@@ -111,13 +109,23 @@ class _HomeScreenState extends State<HomeScreen>
         controller: _controller,
         children: <Widget>[
           new HomePage(),
-          new InputPage(
-            kcmt: user.kecamatan,
+          new InputPageTps(
+            kcmt: widget.user.kecamatan,
           ),
-          //new AddData(),
-          new ReportPage(),
-          new RegisterPage(),
         ],
+      ),
+      floatingActionButton: new FloatingActionButton(
+        onPressed: (){
+          if(_controller.index != 0){
+            print(_controller.index);
+            _controller.index = 0;
+          }
+        },
+        backgroundColor: Theme.of(context).accentColor,
+        child:new Icon(
+          Icons.file_upload,
+          color:Colors.white
+        ),
       ),
     );
   }

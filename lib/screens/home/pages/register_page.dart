@@ -20,6 +20,12 @@ class RegisterPageState extends State<RegisterPage>
     implements RegisterScreenContract {
   BuildContext _ctx;
 
+  List _roles = [
+    "ADMINISTRATOR",
+    "DPT",
+    "TPS",
+  ];
+
   List _kecamatans = [
     "BONTOALA",
     "WAJO",
@@ -27,31 +33,44 @@ class RegisterPageState extends State<RegisterPage>
     "UJUNG TANAH",
     "KEP.SANGKARRANG"
   ];
+
   List<DropdownMenuItem<String>> _dropDownMenuItems;
+  List<DropdownMenuItem<String>> _dropDownMenuItemsR;
   String _currentK;
+  String _currentRole;
 
   bool _obscureText = true;
 
   @override
   void initState() {
-    _dropDownMenuItems = getDropDownMenuItems();
+    _dropDownMenuItems = getDropDownMenuItems(0);
     _currentK = _dropDownMenuItems[0].value;
+    _dropDownMenuItemsR = getDropDownMenuItems(1);
+    _currentRole = _dropDownMenuItemsR[0].value;
 
     super.initState();
   }
 
-  List<DropdownMenuItem<String>> getDropDownMenuItems() {
+  List<DropdownMenuItem<String>> getDropDownMenuItems(int i) {
     List<DropdownMenuItem<String>> items = new List();
-    for (String city in _kecamatans) {
-      items.add(new DropdownMenuItem(value: city, child: new Text(city)));
+
+    if(i == 0){
+      for (String city in _kecamatans) {
+        items.add(new DropdownMenuItem(value: city, child: new Text(city)));
+      }
+    }else{
+      for (String city in _roles) {
+        items.add(new DropdownMenuItem(value: city, child: new Text(city)));
+      }
     }
+
     return items;
   }
 
   bool _isLoading = false;
   final formKey = new GlobalKey<FormState>();
   final scaffoldKey = new GlobalKey<ScaffoldState>();
-  String _name, _email, _password, _kecamatan;
+  String _name, _email, _password, _kecamatan,_role;
   User _user;
 
   FocusNode _focusNodeFirstName = new FocusNode();
@@ -79,7 +98,7 @@ class RegisterPageState extends State<RegisterPage>
     if (form.validate()) {
       setState(() => _isLoading = true);
       form.save();
-      User usr = new User(0, _name, _email, "", userDB.token, _currentK);
+      User usr = new User(0, _name, _email, _currentRole, userDB.token, _currentK);
       _presenter.sendData(usr, _password);
     }
   }
@@ -214,6 +233,24 @@ class RegisterPageState extends State<RegisterPage>
                 ],
               ),
               const SizedBox(height: 24.0),
+              new Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Padding(
+                        padding: EdgeInsets.only(left: 40.0),
+                        child: new Text("Role : ")),
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: new DropdownButton(
+                      value: _currentRole,
+                      items: _dropDownMenuItemsR,
+                      onChanged: changedDropDownItemR,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 24.0),
               new Column(children: <Widget>[
                 _isLoading ? new CircularProgressIndicator() : loginBtn,
                 const SizedBox(height: 24.0),
@@ -252,6 +289,12 @@ class RegisterPageState extends State<RegisterPage>
     print("Selected city $selectedCity, we are going to refresh the UI");
     setState(() {
       _currentK = selectedCity;
+    });
+  }
+  void changedDropDownItemR(String selectedCity) {
+    print("Selected city $selectedCity, we are going to refresh the UI");
+    setState(() {
+      _currentRole = selectedCity;
     });
   }
 
