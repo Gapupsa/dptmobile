@@ -386,7 +386,7 @@ class InputPageState extends State<InputPage> implements InputScreenContract {
                   child: _isLoading ? new CircularProgressIndicator() : loginBtn,
                 ),
                 Center(
-                  child: _user.tipe == "0" ?  importBtn:'',
+                  child: _user.tipe == "0" ?  importBtn:null,
                 ),
                 const SizedBox(height: 24.0),
               ],
