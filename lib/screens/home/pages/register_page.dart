@@ -22,8 +22,8 @@ class RegisterPageState extends State<RegisterPage>
 
   List _roles = [
     "ADMINISTRATOR",
-    "DPT",
-    "TPS",
+    "USER DPT",
+    "USER QUICK COUNT",
   ];
 
   List _kecamatans = [

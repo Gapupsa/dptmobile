@@ -52,7 +52,7 @@ class _HomeScreenTpsState extends State<HomeScreenTps>
               icon: Icon(Icons.home),
               text: "HOME",
             ),
-            Tab(icon: Icon(Icons.input), text: "TPS"),
+            Tab(icon: Icon(Icons.input), text: "QUICK COUNT"),
           ],
         ),
       ),
@@ -113,19 +113,6 @@ class _HomeScreenTpsState extends State<HomeScreenTps>
             kcmt: widget.user.kecamatan,
           ),
         ],
-      ),
-      floatingActionButton: new FloatingActionButton(
-        onPressed: (){
-          if(_controller.index != 0){
-            print(_controller.index);
-            _controller.index = 0;
-          }
-        },
-        backgroundColor: Theme.of(context).accentColor,
-        child:new Icon(
-          Icons.file_upload,
-          color:Colors.white
-        ),
       ),
     );
   }

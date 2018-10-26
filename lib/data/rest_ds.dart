@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'package:async/async.dart';
 import 'package:dptmobile/models/fixdpt.dart';
 import 'package:dptmobile/models/tps.dart';
@@ -18,6 +19,7 @@ class RestDatasource {
   static final CHECKDATA_URL = BASE_URL + "/check/";
   static final EXPORTONE_URL = BASE_URL + "/exporttoexcelByKMT/";
   static final EXPORTTWO_URL = BASE_URL + "/exporttoexcelByKLR/";
+  static final INPUT_URLUPLOAD = BASE_URL + "/uploaddata";
   //static final _API_KEY = "somerandomkey";
 
   Future<Map> login(String username, String password) async {
@@ -152,6 +154,37 @@ class RestDatasource {
       }else if(response.statusCode==100){
         return json.decode('{"flag":2,"error":"Your account is not activated. Please contact administrator."}');
         
+      }else{
+        return json.decode('{"flag":3,"error":"Connection failed or Data Exists"}');
+      }
+  }
+
+  Future<Map> upload(String userid,File file,String token) async {
+      //Map result;
+      var stream= new http.ByteStream(DelegatingStream.typed(file.openRead()));
+      var length= await file.length();
+      var uri = Uri.parse(INPUT_URLUPLOAD);
+      
+      Map<String, String> headers = { 
+        "Accept": "application/json",
+        "Authorization": "Bearer " + token,
+      };
+
+      var request = new http.MultipartRequest("POST", uri);
+
+      var multipartFile = new http.MultipartFile("excel", stream, length, filename: basename(file.path)); 
+      
+      request.headers.addAll(headers);
+      request.files.add(multipartFile); 
+
+      var response = await request.send();
+      response.stream.transform(utf8.decoder).listen((value) {
+        print(value);
+      });
+      if(response.statusCode==200){
+        return json.decode('{"flag":1,"success":"Data has been saved"}');
+      }else if(response.statusCode==100){
+        return json.decode('{"flag":2,"error":"Your account is not activated. Please contact administrator."}');
       }else{
         return json.decode('{"flag":3,"error":"Connection failed or Data Exists"}');
       }

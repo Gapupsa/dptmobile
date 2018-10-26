@@ -28,24 +28,24 @@ class InputPageTpsState extends State<InputPageTps> implements InputScreenContra
 
   File _image;
 
-  Future getImage() async {
-    var imageFile = await ImagePicker.pickImage(source: ImageSource.camera);
+  Future getImage(bool isCamera) async {
+    var imageFile = await ImagePicker.pickImage(source: isCamera ? ImageSource.camera:ImageSource.gallery);
 
     
-    final tempDir =await getTemporaryDirectory();
-    final path = tempDir.path;
+    // final tempDir =await getTemporaryDirectory();
+    // final path = tempDir.path;
 
-    int rand= new Math.Random().nextInt(100000);
-    //_showDialogIndicator();
-    Img.Image image= Img.decodeImage(imageFile.readAsBytesSync());
-    Img.Image smallerImg = Img.copyResize(image, 500);
+    // int rand= new Math.Random().nextInt(100000);
+    // //_showDialogIndicator();
+    // Img.Image image= Img.decodeImage(imageFile.readAsBytesSync());
+    // Img.Image smallerImg = Img.copyResize(image, 500);
 
-    var compressImg= new File("$path/image_$rand.jpg")
-    ..writeAsBytesSync(Img.encodeJpg(smallerImg, quality: 85));
+    // var compressImg= new File("$path/image_$rand.jpg")
+    // ..writeAsBytesSync(Img.encodeJpg(smallerImg, quality: 85));
 
 
     setState(() {
-        _image = compressImg;
+        _image = imageFile;
     });
     //Navigator.of(ctxDialogLoading).pop();
   }
@@ -59,13 +59,15 @@ class InputPageTpsState extends State<InputPageTps> implements InputScreenContra
   bool _isLoading = false;
   final formKey = new GlobalKey<FormState>();
   final scaffoldKey = new GlobalKey<ScaffoldState>();
-  String _userid,_kelurahan, _kecamatan, _vote, _pic;
+  String _userid,_kelurahan, _kecamatan, _vote, _pic,_note;
   Tps _fixDpt;
   User _user;
 
   FocusNode _focusNodeNohp = new FocusNode();
+  FocusNode _focusNodeKet = new FocusNode();
 
   TextEditingController ctrl6 = new TextEditingController();
+  TextEditingController ctrl1 = new TextEditingController();
 
   InputScreenPresenter _presenter;
 
@@ -260,7 +262,7 @@ List _tps = [
       form.save();
       _userid = _user.id.toString();
       _fixDpt = new Tps(
-          _currentKC, _currentKL,_currentTPS, _vote, _image);
+          _currentKC, _currentKL,_currentTPS, _vote, _image,_note);
       _presenter.sendDataTps(_fixDpt, _user.token);
     }
   }
@@ -360,7 +362,7 @@ List _tps = [
                         filled: true,
                         icon: const Icon(Icons.phone_android),
                         hintText: 'Enter Number of Votes',
-                        labelText: 'Votes *',
+                        labelText: 'Number of Votes *',
                       ),
                       onSaved: (String value) {
                         _vote = value;
@@ -372,19 +374,44 @@ List _tps = [
                       focusNode: _focusNodeNohp),
                 ),
                 const SizedBox(height: 24.0),
+                new EnsureVisibleWhenFocused(
+                  focusNode: _focusNodeKet,
+                  child: new TextFormField(
+                      decoration: const InputDecoration(
+                        filled: true,
+                        icon: const Icon(Icons.description),
+                        hintText: 'Enter Note',
+                        labelText: 'Note *',
+                      ),
+                      onSaved: (String value) {
+                        _note = value;
+                      },
+                      controller: ctrl1,
+                      focusNode: _focusNodeKet),
+                ),
+                const SizedBox(height: 24.0),
                 new Center(
                   child: _image == null
                       ? new Text('Upload reference picture.')
                       : new Image.file(_image),
                 ),
-                new Center(
-                  child: IconButton(
-                    icon: Icon(Icons.camera_alt),
-                    color: Colors.blue,
-                    onPressed: () async{
-                      await getImage();
-                    },
-                  ),
+                new Row(
+                  children: <Widget>[
+                    new IconButton(
+                        icon: Icon(Icons.camera_alt),
+                        color: Colors.blue,
+                        onPressed: () async{
+                          await getImage(true);
+                        },
+                    ),
+                    new IconButton(
+                        icon: Icon(Icons.photo_library),
+                        color: Colors.blue,
+                        onPressed: () async{
+                          await getImage(false);
+                        },
+                    ),
+                  ],
                 ),
                 new Column(children: <Widget>[
                   _isLoading ? new CircularProgressIndicator() : loginBtn,
@@ -401,6 +428,7 @@ List _tps = [
 
   void clearForm() {
     ctrl6.clear();
+    ctrl1.clear();
   }
 
   void changedDropDownItemKL(String selectedCity) {
@@ -505,5 +533,15 @@ List _tps = [
       _showDialogInfo(data['error'].toString());
       setState(() => _isLoading = false);
     }
+  }
+
+  @override
+  void onError(String errorTxt) {
+    // TODO: implement onError
+  }
+
+  @override
+  void onSuccess(Map result) {
+    // TODO: implement onSuccess
   }
 }

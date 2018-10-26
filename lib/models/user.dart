@@ -12,7 +12,7 @@ class User {
     this._id = obj["id"];
     this._name = obj["name"];
     this._email = obj["email"];
-    this._tipe = obj["tipe"];
+    this._tipe = obj["tipe"].toString();
     this._token = obj["token"];
     this._kecamatan = obj["kecamatan"];
   }

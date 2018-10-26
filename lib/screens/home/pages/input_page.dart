@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:dptmobile/data/database_helper.dart';
 import 'package:dptmobile/data/rest_ds.dart';
 import 'package:dptmobile/helperWidget/ensureVisibleWhenFocused.dart';
@@ -8,6 +9,7 @@ import 'package:dptmobile/screens/login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:dptmobile/models/fixdpt.dart';
 import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 
 class InputPage extends StatefulWidget {
   final String kcmt;
@@ -22,10 +24,12 @@ class InputPageState extends State<InputPage> implements InputScreenContract {
 
   BuildContext _ctx;
   BuildContext ctxDialog;
+  BuildContext ctxDialogLoading;
 
   RestDatasource api = new RestDatasource();
-
+  File _excell;
   bool _isLoading = false;
+  bool _isLoadingI = false;
   final formKey = new GlobalKey<FormState>();
   final scaffoldKey = new GlobalKey<ScaffoldState>();
   String _userid, _nik, _name, _alamat, _kelurahan, _kecamatan, _nohp, _pic;
@@ -176,6 +180,15 @@ class InputPageState extends State<InputPage> implements InputScreenContract {
     }
   }
 
+  void _uploadFile(File uploadFile){
+    _presenter.upload(_userid,uploadFile,_user.token);
+  }
+
+  void _import() {
+    
+    _uploadFile(_excell);
+  }
+
   void _showSnackBar(String text) {
     scaffoldKey.currentState
         .showSnackBar(new SnackBar(content: new Text(text)));
@@ -195,6 +208,25 @@ class InputPageState extends State<InputPage> implements InputScreenContract {
         color: Colors.primaries[0],
       ),
     );
+
+    var importBtn = Container(
+      child: new RaisedButton(
+        textColor: Colors.white,
+        onPressed: (){
+          if(_isLoadingI){
+            _showDialogIndicator();
+            _import();
+          }else{
+            getImage();
+          }
+         // _showDialogIndicator();
+        },
+        child: _isLoadingI ? new Text("Upload"):new Text("Import From Excel"),
+        color: Colors.green
+      ),
+    );
+
+    
 
     return new ConstrainedBox(
       constraints: BoxConstraints(maxHeight: height, maxWidth: width),
@@ -350,9 +382,12 @@ class InputPageState extends State<InputPage> implements InputScreenContract {
                       focusNode: _focusNodePic),
                 ),
                 const SizedBox(height: 24.0),
-                new Column(children: <Widget>[
-                  _isLoading ? new CircularProgressIndicator() : loginBtn,
-                ]),
+                Center(
+                  child: _isLoading ? new CircularProgressIndicator() : loginBtn,
+                ),
+                Center(
+                  child: _user.tipe == "0" ?  importBtn:'',
+                ),
                 const SizedBox(height: 24.0),
               ],
             ),
@@ -361,6 +396,17 @@ class InputPageState extends State<InputPage> implements InputScreenContract {
         ),
       ),
     );
+  }
+
+  Future getImage() async {
+    var excelFile = await ImagePicker.pickImage(source: ImageSource.gallery);
+
+    setState(() {
+        _excell = excelFile;
+        _isLoadingI = true;
+    });
+
+    
   }
 
   void clearForm() {
@@ -410,6 +456,33 @@ class InputPageState extends State<InputPage> implements InputScreenContract {
     );
   }
 
+  Future<Null> _showDialogIndicator() {
+      return showDialog<Null>(
+        context: context,
+        barrierDismissible: false, // user must tap button!
+        builder: (BuildContext context) {
+          ctxDialogLoading = context;
+          return new AlertDialog(
+            content: new SingleChildScrollView(
+              child: new ListBody(
+                children: <Widget>[
+                  _isLoadingI
+                      ? Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : null,
+                  const SizedBox(height: 10.0),
+                  Center(child: new Text("Please wait...")),
+                ],
+              ),
+            ),
+          );
+        },
+      );
+    }
+
+  
+
   @override
   void onLoginError(String errorTxt) {
     _showDialogInfo(errorTxt);
@@ -434,6 +507,41 @@ class InputPageState extends State<InputPage> implements InputScreenContract {
           MaterialPageRoute(
             builder: (context) => LoginScreen(),
           ));
+    }
+  }
+
+  @override
+  void onError(String errorTxt) {
+    setState(() {
+        _isLoadingI = false;
+      } );
+  }
+
+  @override
+  void onSuccess(Map result) async {
+    if (result["flag"] == 1) {
+      Navigator.of(ctxDialogLoading).pop();
+      _showDialogInfo("Successfully to uploaded");
+      clearForm();
+      setState(() {
+        _isLoadingI = false;
+      } );
+    } else if(result["flag"] == 2) {
+      _showDialogInfo(result['error'].toString());
+      setState(() => _isLoading = false);
+      var db = new DatabaseHelper();
+      User usr = await db.getUser();
+      api.logout(usr.token);
+      db.deleteUsers();
+      Navigator.pushReplacement(
+          _ctx,
+          MaterialPageRoute(
+            builder: (context) => LoginScreen(),
+          ));
+    }else{
+      Navigator.of(ctxDialogLoading).pop();
+      _showDialogInfo(result['error'].toString());
+      setState(() => _isLoading = false);
     }
   }
 }
