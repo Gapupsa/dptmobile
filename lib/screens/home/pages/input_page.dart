@@ -386,7 +386,7 @@ class InputPageState extends State<InputPage> implements InputScreenContract {
                   child: _isLoading ? new CircularProgressIndicator() : loginBtn,
                 ),
                 Center(
-                  child: _user.tipe == "0" ?  importBtn:null,
+                  child: _user != null ?_user.tipe == "0" ?  importBtn:null:null,
                 ),
                 const SizedBox(height: 24.0),
               ],
@@ -521,8 +521,9 @@ class InputPageState extends State<InputPage> implements InputScreenContract {
   void onSuccess(Map result) async {
     if (result["flag"] == 1) {
       Navigator.of(ctxDialogLoading).pop();
-      _showDialogInfo("Successfully to uploaded");
+      _showDialogInfo(result["success"]);
       clearForm();
+      setState(() => _isLoading = false);
       setState(() {
         _isLoadingI = false;
       } );
@@ -538,10 +539,13 @@ class InputPageState extends State<InputPage> implements InputScreenContract {
           MaterialPageRoute(
             builder: (context) => LoginScreen(),
           ));
-    }else{
+    }else if(result["flag"] == 3) {
       Navigator.of(ctxDialogLoading).pop();
       _showDialogInfo(result['error'].toString());
       setState(() => _isLoading = false);
+      setState(() {
+        _isLoadingI = false;
+      } );
     }
   }
 }

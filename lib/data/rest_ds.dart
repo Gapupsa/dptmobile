@@ -178,15 +178,19 @@ class RestDatasource {
       request.files.add(multipartFile); 
 
       var response = await request.send();
-      response.stream.transform(utf8.decoder).listen((value) {
+      /* response.stream.transform(utf8.decoder).listen((value) {
         print(value);
-      });
+      }); */
       if(response.statusCode==200){
-        return json.decode('{"flag":1,"success":"Data has been saved"}');
+        //return json.decode('{"flag":1,"success":"Data has been saved"}');
+        String responseData = await response.stream.transform(utf8.decoder).join();
+        return json.decode(responseData);
       }else if(response.statusCode==100){
         return json.decode('{"flag":2,"error":"Your account is not activated. Please contact administrator."}');
       }else{
-        return json.decode('{"flag":3,"error":"Connection failed or Data Exists"}');
+        String responseData = await response.stream.transform(utf8.decoder).join();
+        return json.decode(responseData);
+        //return json.decode('{"flag":3,"error":"Connection failed or Data Exists"}');
       }
   }
 
