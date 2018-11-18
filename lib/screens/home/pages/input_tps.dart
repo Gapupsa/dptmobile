@@ -361,14 +361,14 @@ List _tps = [
                       decoration: const InputDecoration(
                         filled: true,
                         icon: const Icon(Icons.phone_android),
-                        hintText: 'Enter Number of Votes',
-                        labelText: 'Number of Votes *',
+                        hintText: 'Masukkan jumlah suara',
+                        labelText: 'Jumlah Suara *',
                       ),
                       onSaved: (String value) {
                         _vote = value;
                       },
                       validator: (val) {
-                        return val == "" ? "Number of votes IS REQUIRED" : null;
+                        return val == "" ? "Jumlah suara harus diisi" : null;
                       },
                       controller: ctrl6,
                       focusNode: _focusNodeNohp),
@@ -380,8 +380,8 @@ List _tps = [
                       decoration: const InputDecoration(
                         filled: true,
                         icon: const Icon(Icons.description),
-                        hintText: 'Enter Note',
-                        labelText: 'Note *',
+                        hintText: 'Masukkan catatan kecurangan',
+                        labelText: 'Catatan Kecurangan *',
                       ),
                       onSaved: (String value) {
                         _note = value;

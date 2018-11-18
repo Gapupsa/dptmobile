@@ -1,5 +1,5 @@
 name: dptmobile
-description: A new Flutter project.
+description: DPT Mobile Alkausar.
 
 dependencies:
   flutter:
@@ -17,6 +17,7 @@ dependencies:
   pull_to_refresh: ^1.1.5
   image_picker: ^0.4.10
   image: "^2.0.4"
+  http: ^0.12.0
 
 dev_dependencies:
   flutter_test:

@@ -155,7 +155,7 @@ class RestDatasource {
         return json.decode('{"flag":2,"error":"Your account is not activated. Please contact administrator."}');
         
       }else{
-        return json.decode('{"flag":3,"error":"Connection failed or Data Exists"}');
+        return json.decode('{"flag":3,"error":"TPS Data Has Been Inputed."}');
       }
   }
 
